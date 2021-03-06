@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+.container-home {
+  width: 98%;
+  padding-right: var(--bs-gutter-x, 0.75rem);
+  padding-left: var(--bs-gutter-x, 0.75rem);
+  margin-top: 10%;
+  height: 100vh;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.container-getin {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  border: 2px solid;
+  width: 30%;
+  height: 100px;
+
+}
