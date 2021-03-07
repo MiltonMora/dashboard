@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-export const login = (data) => {
+export function Login(data) {
     try {
-        axios.post(`http://jsonplaceholder.typicode.com/posts`, data)
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
+       return axios.post(`http://127.0.0.1:8000/api/login_check`, data )
+        
     }
     catch(error) {
         console.log(error.message);

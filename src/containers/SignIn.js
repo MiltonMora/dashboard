@@ -16,6 +16,9 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { Login } from '../actions/UserActions';
 
 function Copyright() {
   return (
@@ -75,6 +78,18 @@ const useStyles = makeStyles((theme) => ({
   alert: {
       
   },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonProgress: {
+    color: theme.palette.primary.main,
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
 
 export default function SignInSide() {
@@ -87,6 +102,7 @@ export default function SignInSide() {
     error_email: false,
     error_password: false,
     open: false,
+    loading: false
   });
 
   const handleChange = (prop) => (event) => {
@@ -103,7 +119,19 @@ export default function SignInSide() {
 
   const handleSubmit = (event) => {
       event.preventDefault();
-      setValues({...values, error_email: true, open: true});
+      setValues({...values, loading: true})
+      const data = {
+        "username": values.email,
+        "password": values.password
+      };
+      Login(data)
+      .then(res => {
+        setValues({...values, loading: false})
+      })
+      .catch(err => {
+        setValues({...values, error_email: true, open: true, loading: false});
+      });
+
   }
 
   const handleClose = (event, reason) => {
@@ -168,16 +196,19 @@ export default function SignInSide() {
                 ),
               }}
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={handleSubmit}
-            >
-              Sign In
-            </Button>
+            <div className={classes.wrapper}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color={values.loading ? "inherit" :"secondary"}
+                className={classes.submit}
+                onClick={handleSubmit}
+              >
+                Sign In
+              </Button>
+              {values.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+            </div>
             <Snackbar
                 anchorOrigin={{
                     vertical: 'bottom',
@@ -186,7 +217,7 @@ export default function SignInSide() {
                 autoHideDuration={6000}
                 open={values.open}
                 onClose={handleClose}
-                message="I love snacks"
+                message="Error con los datos de ingreso, intenta de nuevo"
                 action={
                     <React.Fragment>
                       <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
