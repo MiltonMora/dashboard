@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 //import Products from '../components/Products';
-//import initialState from '../initialState';
-
-import '../styles/components/Home.css';
+//import AppContext from '../context/AppContext';
 
 const Home = () => {
+  const token = localStorage.getItem('ustk');
   return (
     <div className="container-home">
       <div className="container-getin">

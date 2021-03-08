@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext }  from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,6 +17,9 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
+import ButtonIcon from '@material-ui/icons/AssignmentInd';
+import { useHistory } from 'react-router-dom';
 
 import { Login } from '../actions/UserActions';
 
@@ -81,10 +84,13 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     margin: theme.spacing(1),
     position: 'relative',
+    textAlign: 'center',
   },
   buttonProgress: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     position: 'absolute',
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    borderRadius: '50%',
     top: '50%',
     left: '50%',
     marginTop: -12,
@@ -94,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
   const classes = useStyles();
+  const histrory = useHistory();
 
   const [values, setValues] = React.useState({
     password: '',
@@ -127,11 +134,12 @@ export default function SignInSide() {
       Login(data)
       .then(res => {
         setValues({...values, loading: false})
+        localStorage.setItem('ustk', res.data.token)
+        histrory.push('/home');
       })
       .catch(err => {
         setValues({...values, error_email: true, open: true, loading: false});
       });
-
   }
 
   const handleClose = (event, reason) => {
@@ -151,7 +159,7 @@ export default function SignInSide() {
             <LockOutlinedIcon className={classes.large}/>
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Ingreso
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -160,7 +168,7 @@ export default function SignInSide() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Correo Electrónico"
               name="email"
               autoComplete="email"
               autoFocus
@@ -174,7 +182,7 @@ export default function SignInSide() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Contraseña"
               type={values.showPassword ? 'text' : 'password'}
               value={values.password}
               onChange={handleChange('password')}
@@ -199,13 +207,13 @@ export default function SignInSide() {
             <div className={classes.wrapper}>
               <Button
                 type="submit"
-                fullWidth
-                variant="contained"
+                size="large"
+                variant="outlined"
                 color={values.loading ? "inherit" :"secondary"}
                 className={classes.submit}
                 onClick={handleSubmit}
-              >
-                Sign In
+                startIcon={<ButtonIcon />}>
+                Ingresar
               </Button>
               {values.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
             </div>
@@ -217,7 +225,6 @@ export default function SignInSide() {
                 autoHideDuration={6000}
                 open={values.open}
                 onClose={handleClose}
-                message="Error con los datos de ingreso, intenta de nuevo"
                 action={
                     <React.Fragment>
                       <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
@@ -225,12 +232,15 @@ export default function SignInSide() {
                       </IconButton>
                     </React.Fragment>
                   }
-                className={classes.alert}
-            />
+                className={classes.alert}>
+                <Alert onClose={handleClose} severity="error">
+                Error con los datos de ingreso, intenta de nuevo
+                </Alert>
+            </Snackbar>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  Olvide mi contraseña!!
                 </Link>
               </Grid>
             </Grid>
