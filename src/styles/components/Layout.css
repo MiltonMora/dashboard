@@ -1,15 +1,33 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400&display=swap");
-
-body {
-  margin: 0;
-  padding: 0;
-  color: #3c484e;
-  font-family: 'Open Sans', sans-serif;
+::-webkit-scrollbar {
+  width: 5px;
+  height: 7px;
 }
-
-.Main {
-  padding: 10px;
-  grid-template-columns: minmax(auto, 768px);
-  display: grid;
-  justify-content: center;
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #525965;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #525965;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #525965;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: transparent;
+}
+::-webkit-scrollbar-track:active {
+  background: transparent;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
 }

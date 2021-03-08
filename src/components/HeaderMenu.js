@@ -3,19 +3,20 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      height: '100vh',
-    },
     menu: {
-        borderRight: "1px solid grey",
-        height: "100vh",
+        maxHeight: '100%',
+        height: '100%',
+        overflowY: 'auto',
+        position: 'relative',
       },
   }));
 
-function HeaderMenu() {
+const HeaderMenu = () => {
     const classes = useStyles();
     return (
-        <Grid item className={classes.menu} />
+        <Grid item className={classes.menu}>
+           
+        </Grid>
     );
 }
 

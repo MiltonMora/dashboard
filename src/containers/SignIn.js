@@ -138,7 +138,7 @@ export default function SignInSide() {
         histrory.push('/home');
       })
       .catch(err => {
-        setValues({...values, error_email: true, open: true, loading: false});
+        setValues({...values, error_email: true, open: true, loading: false, error_password: true});
       });
   }
 
