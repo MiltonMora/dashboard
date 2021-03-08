@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     top: "0",
     backgroundColor: "RGBA(255,255,255,0.7)",
     filter: 'blur(5px)',
+    WebkitFilter: 'blur(5px)',
   },
 }));
 
