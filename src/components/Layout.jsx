@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import MenuOpen from '@material-ui/icons/MenuOpen';
+import Menu from '@material-ui/icons/Menu';
+import IconButton from '@material-ui/core/IconButton';
 
 import Header from './Header';
 import HeaderMenu from './HeaderMenu';
 import Footer from './Footer';
+import AppContext from '../context/AppContext';
 
 import '../styles/components/Layout.css';
 
@@ -18,33 +23,116 @@ const useStyles = makeStyles((theme) => ({
       padding: '30px 40px',
       maxHeight: '100%',
   },
-  menuContainer: {
-    borderRight: "1px solid #e5e5e5",
-    height: '100vh',
+  menuContainerDisplay: {
+    display: 'none',
+  },
+  menuContainerDisplayb: {
+    display: 'none',
   },
   menu: {
+
+  },
+  menuNormal: {
     width: 'calc(100%/6)',
     height: '100%',
     maxHeight: '100%',
     position: "fixed",
     zIndex: '999',
+    borderRight: "1px solid #e5e5e5",
+    marginTop: "70px", 
+    backgroundColor: 'RGBA(255,255,255,0.83)',
+  },
+  menuFull: {
+    width: '100%',
+    height: '100%',
+    maxHeight: '100%',
+    position: "fixed",
+    zIndex: '999',
+    borderRight: "1px solid #e5e5e5",
+    marginTop: "70px",
+    backgroundColor: 'RGBA(255,255,255,0.83)',
+  },
+  menuSticky: {
+    height: "70px",
+    width: 'calc(100%/6)',
+    borderBottom: "1px solid #e5e5e5",
+    position: "fixed",
+    top: "0",
+    zIndex: 999,
+    float: 'right',
+    backgroundColor: 'RGBA(255,255,255,0.83)',
+  },
+  margin: {
+    margin: theme.spacing(0),
   },
 }));
 
 const Layout = ({ children }) => {
   const classes = useStyles();
+  
+  const [layoutValues, setLayoutValues] = React.useState({
+    md: 10,
+    open: '',
+    menuZise: 2,
+  });
+
+  const {state: {lateralMenu}, menuStatus} = useContext(AppContext);
+
+  const theme = useTheme();
+  const flag = useMediaQuery(theme.breakpoints.up('md'));
+  
+
+  useEffect(()=> {
+    if( flag===false ) {
+      menuStatus(false)
+      classes.menu = classes.menuFull;
+      setLayoutValues({ ...layoutValues, md: 12, open: classes.menuContainerDisplay });
+    }
+    else {
+      menuStatus(true)
+      classes.menu = classes.menuNormal;
+      setLayoutValues({ ...layoutValues, md: 10, open: '' });
+    }
+  },[flag]);
+
+
+  const handleClose = () => {
+    menuStatus(!lateralMenu);
+    let menuZise = 2;
+    let size = 12;
+    if( flag=== false & lateralMenu === false ) {
+        classes.menu = classes.menuFull;
+        menuZise = 2;
+    }else {
+      classes.menu = classes.menuNormal;
+      size = lateralMenu === true ? 12 : 10;  
+    }
+    const opened = lateralMenu === true ? classes.menuContainerDisplay : '';
+    setLayoutValues({ ...layoutValues, md: size, open: opened, menuZise: menuZise });
+  }
+
+  const handleCloseItem = () => {
+    flag === false && handleClose();
+  }
+
   return (
     <div className={classes.root}>
       <Grid container>
         <CssBaseline />
-        <Grid item xs={2} className={classes.menuContainer}>
-          <Grid item className={classes.menu}>
+        <Grid item xs={layoutValues.menuZise} className={ layoutValues.open }>
+          <Grid item className={classes.menu} onClick={handleCloseItem}>
             <HeaderMenu />
           </Grid>
         </Grid>
-        <Grid item xs={10}>
+        <Grid item className={classes.menuSticky}>
+                <IconButton onClick={handleClose} className={classes.margin}>
+                    {lateralMenu ? <MenuOpen fontSize="inherit" /> : <Menu fontSize="inherit" />}
+                </IconButton>
+            </Grid>
+        <Grid item sm={layoutValues.md}>
+            
             <Header />
-          <Grid item xs={12} className={classes.content}>
+          <Grid item className={classes.content}>
             {children}
           </Grid>
         </Grid>

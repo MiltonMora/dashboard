@@ -6,14 +6,15 @@ import initialState from '../initialState';
 const useInitialState = () => {
     const [state, setState] = useState(initialState);
 
-    const addUserToken = payload => {
+    const menuStatus = payload => {
         setState({
             ...state,
-            user: payload,
+            lateralMenu: payload,
         });
     }
+
     return {
-        addUserToken,
+        menuStatus,
         state,
     }
 };

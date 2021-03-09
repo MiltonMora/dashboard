@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    height: '100vh',
   },
   bullet: {
     display: 'inline-block',
