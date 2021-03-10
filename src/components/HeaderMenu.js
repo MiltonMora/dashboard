@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-
+import Menu from '../containers/Menu';
 import AppContext from '../context/AppContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,8 +34,6 @@ const useStyles = makeStyles((theme) => ({
 const HeaderMenu = () => {
     const classes = useStyles();
 
-    const {state: {lateralMenu}, menuStatus} = useContext(AppContext);
-
     const theme = useTheme();
     const flag = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -59,111 +57,7 @@ const HeaderMenu = () => {
             <Link to="locations">
                 <p >locations</p>
             </Link>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
-            <li>
-                1
-            </li>
+            <Menu />
         </Grid>
     );
 }

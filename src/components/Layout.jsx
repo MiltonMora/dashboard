@@ -6,6 +6,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuOpen from '@material-ui/icons/MenuOpen';
 import Menu from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import { useHistory } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
 
 import Header from './Header';
 import HeaderMenu from './HeaderMenu';
@@ -70,19 +72,42 @@ const useStyles = makeStyles((theme) => ({
 const Layout = ({ children }) => {
   const classes = useStyles();
   
+  const histrory = useHistory();
+
   const [layoutValues, setLayoutValues] = React.useState({
     md: 10,
     open: '',
     menuZise: 2,
   });
 
-  const {state: {lateralMenu}, menuStatus} = useContext(AppContext);
+  const {state: {lateralMenu}, menuStatus, setUser} = useContext(AppContext);
 
   const theme = useTheme();
   const flag = useMediaQuery(theme.breakpoints.up('md'));
   
+  useEffect(()=> {
+    const token = localStorage.getItem('ustk');
+    
+    if (!token){
+      histrory.push('/');
+    }
+    else {
+      const dataUser = jwt_decode(token); 
+      setUser(dataUser);
+    }
+  },[]);
 
   useEffect(()=> {
+    const token = localStorage.getItem('ustk');
+    
+    if (!token){  
+      histrory.push('/');
+    }
+    else {
+      const dataUser = jwt_decode(token); 
+      setUser(dataUser);
+    }
+
     if( flag===false ) {
       menuStatus(false)
       classes.menu = classes.menuFull;

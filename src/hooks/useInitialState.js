@@ -12,9 +12,17 @@ const useInitialState = () => {
             lateralMenu: payload,
         });
     }
+    
+    const setUser = payload => {
+        setState({
+            ...state,
+            user: payload,
+        });
+    }
 
     return {
         menuStatus,
+        setUser,
         state,
     }
 };
