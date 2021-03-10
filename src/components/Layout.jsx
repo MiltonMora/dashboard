@@ -124,13 +124,12 @@ const Layout = ({ children }) => {
             <HeaderMenu />
           </Grid>
         </Grid>
-        <Grid item className={classes.menuSticky}>
-                <IconButton onClick={handleClose} className={classes.margin}>
-                    {lateralMenu ? <MenuOpen fontSize="inherit" /> : <Menu fontSize="inherit" />}
-                </IconButton>
-            </Grid>
         <Grid item sm={layoutValues.md}>
-            
+          <Grid item className={classes.menuSticky}>
+              <IconButton onClick={handleClose} className={classes.margin}>
+                  {lateralMenu ? <MenuOpen fontSize="inherit" /> : <Menu fontSize="inherit" />}
+              </IconButton>
+          </Grid>
             <Header />
           <Grid item className={classes.content}>
             {children}
