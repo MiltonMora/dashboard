@@ -20,6 +20,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import ButtonIcon from '@material-ui/icons/AssignmentInd';
 import { useHistory } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
 
 import { Login } from '../actions/UserActions';
 
@@ -134,7 +135,7 @@ export default function SignInSide() {
       Login(data)
       .then(res => {
         setValues({...values, loading: false})
-        localStorage.setItem('ustk', res.data.token)
+        localStorage.setItem('ustk', JSON.stringify(jwt_decode(res.data.token)))
         histrory.push('/home');
       })
       .catch(err => {

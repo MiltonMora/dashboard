@@ -54,9 +54,6 @@ const HeaderMenu = () => {
             <Link to="home">
                 <p >home</p>
             </Link>
-            <Link to="locations">
-                <p >locations</p>
-            </Link>
             <Menu />
         </Grid>
     );

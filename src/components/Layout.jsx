@@ -7,7 +7,6 @@ import MenuOpen from '@material-ui/icons/MenuOpen';
 import Menu from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom';
-import jwt_decode from "jwt-decode";
 
 import Header from './Header';
 import HeaderMenu from './HeaderMenu';
@@ -80,34 +79,25 @@ const Layout = ({ children }) => {
     menuZise: 2,
   });
 
-  const {state: {lateralMenu}, menuStatus, setUser} = useContext(AppContext);
+  const {state: {lateralMenu}, menuStatus} = useContext(AppContext);
 
   const theme = useTheme();
   const flag = useMediaQuery(theme.breakpoints.up('md'));
   
-  useEffect(()=> {
-    const token = localStorage.getItem('ustk');
-    
-    if (!token){
+    const token = JSON.parse(localStorage.getItem('ustk'));
+    const now = Date.now();
+
+    if (
+      !token ||
+      token.status === false ||
+      token.exp >= now
+    ){
       histrory.push('/');
     }
-    else {
-      const dataUser = jwt_decode(token); 
-      setUser(dataUser);
-    }
-  },[]);
+
 
   useEffect(()=> {
-    const token = localStorage.getItem('ustk');
     
-    if (!token){  
-      histrory.push('/');
-    }
-    else {
-      const dataUser = jwt_decode(token); 
-      setUser(dataUser);
-    }
-
     if( flag===false ) {
       menuStatus(false)
       classes.menu = classes.menuFull;
@@ -145,7 +135,7 @@ const Layout = ({ children }) => {
       <Grid container>
         <CssBaseline />
         <Grid item xs={layoutValues.menuZise} className={ layoutValues.open }>
-          <Grid item className={classes.menu} onClick={handleCloseItem}>
+          <Grid item className={classes.menu}>
             <HeaderMenu />
           </Grid>
         </Grid>

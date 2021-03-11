@@ -1,26 +1,21 @@
 export default {
-  user: "",
   lateralMenu: true,
   mnSize: false,
   permission: {
+    SuperAdministrator: [
+      'users',
+      'Bussines',  
+    ],
+  },
+  menu: {
     users: {
-      menu: { 
-        Usuarios: 'users',
-        Perfiles: 'perfil',
-        'Perfil Usuarios': 'prefil-users'
-      },
-      perfil: [
-        'SuperAdministrator'
-      ]
+      Usuarios: 'users',
+      Perfiles: 'perfil',
+      'Perfil Usuarios': 'prefil-users'
     },
-    Bussines: {
-      menu: { 
-        Bussines: 'bussines',
-        'Bussines User': 'bussines-user'
-      },
-      perfil: [
-        'SuperAdministrator'
-      ]
-    }
+    Bussines: { 
+      Bussines: 'bussines',
+      'Bussines User': 'bussines-user'
+    },
   }
 };
