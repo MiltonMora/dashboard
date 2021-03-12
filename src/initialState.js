@@ -4,7 +4,7 @@ export default {
   permission: {
     SuperAdministrator: [
       'users',
-      'Bussines',  
+      'Bussines',
     ],
   },
   menu: {

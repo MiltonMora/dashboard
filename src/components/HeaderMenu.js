@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
         height: '100%',
         overflowY: 'auto',
         position: 'relative',
+        marginBottom: '5%',
     },
     menuSticky: {
         height: "70px",
@@ -51,9 +52,6 @@ const HeaderMenu = () => {
             <Grid item md={false} className={classes.displayShowMenu}>
                 gato
             </Grid>
-            <Link to="home">
-                <p >home</p>
-            </Link>
             <Menu />
         </Grid>
     );

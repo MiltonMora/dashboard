@@ -1,10 +1,7 @@
 import React, { useContext, useEffect }  from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 
 import AppContext from '../context/AppContext';
@@ -15,12 +12,22 @@ const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
     },
+    height: {
+        padding: '5% 0%',
+    },
+    p: {
+        marginBottom: '10%',
+    }
   }));
 
 const Menu = () => {
 
     const {state: {permission}} = useContext(AppContext);
     const classes = useStyles();
+    const user = JSON.parse(localStorage.getItem('ustk'));
+
+    const theme = useTheme();
+    const flag = useMediaQuery(theme.breakpoints.up('md'));
 
     const [expanded, setExpanded] = React.useState(false);
 
@@ -39,16 +46,27 @@ const Menu = () => {
                 menuData = permission[rol]
             }  
         })
-        setValues({...values, menu: menuData})
+        setValues({...values, menu: menuData, iconBtn: document.getElementById('colseMenu')})
       },[]);
 
-    const user = JSON.parse(localStorage.getItem('ustk'));
+    const handleClickLink = () => {
+        if(flag === false)
+        values.iconBtn.click();
+    }
 
     return (
         <div className={classes.root}>
-        {values.menu.map((item) => (
-            <MenuAccordion item={item} handleChange={handleChange} expanded={expanded} key={item}/>
-        ))}
+            <Link to="home">
+                <p onClick={handleClickLink}>home</p>
+            </Link>
+            {values.menu.map((item) => (
+                <MenuAccordion item={item} handleChange={handleChange} expanded={expanded} key={item}/>
+            ))}
+            <div className={classes.height}>
+                <a href="http://iyoud.org/" target="_blank">
+                    <p onClick={handleClickLink} className={classes.p}>IYouD</p>
+                </a>
+            </div>
         </div>
     )
 }

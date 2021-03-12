@@ -126,10 +126,6 @@ const Layout = ({ children }) => {
     setLayoutValues({ ...layoutValues, md: size, open: opened, menuZise: menuZise });
   }
 
-  const handleCloseItem = () => {
-    flag === false && handleClose();
-  }
-
   return (
     <div className={classes.root}>
       <Grid container>
@@ -141,7 +137,7 @@ const Layout = ({ children }) => {
         </Grid>
         <Grid item sm={layoutValues.md}>
           <Grid item className={classes.menuSticky}>
-              <IconButton onClick={handleClose} className={classes.margin}>
+              <IconButton onClick={handleClose} id='colseMenu' className={classes.margin}>
                   {lateralMenu ? <MenuOpen fontSize="inherit" /> : <Menu fontSize="inherit" />}
               </IconButton>
           </Grid>
