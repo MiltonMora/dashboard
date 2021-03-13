@@ -207,6 +207,7 @@ export default function SignInSide() {
             />
             <div className={classes.wrapper}>
               <Button
+                disabled={values.loading}
                 type="submit"
                 size="large"
                 variant="outlined"
@@ -216,7 +217,7 @@ export default function SignInSide() {
                 startIcon={<ButtonIcon />}>
                 Ingresar
               </Button>
-              {values.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+              {values.loading ? <CircularProgress size={24} className={classes.buttonProgress} />: ''}
             </div>
             <Snackbar
                 anchorOrigin={{

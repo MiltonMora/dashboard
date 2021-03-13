@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Avatar from '@material-ui/core/Avatar';
 
 import Menu from '../containers/Menu';
 import AppContext from '../context/AppContext';
@@ -30,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
     },
     displayShowMenu: {
     },
+    large: {
+      width: theme.spacing(5),
+      height: theme.spacing(5),
+      margin: '5%',
+    },
   }));
 
 const HeaderMenu = () => {
@@ -50,7 +55,7 @@ const HeaderMenu = () => {
     return (
         <Grid item className={classes.menu}>
             <Grid item md={false} className={classes.displayShowMenu}>
-                gato
+              <Avatar alt="IYouD" src="https://iyoud.org/wp-content/uploads/2020/10/cropped-logo-color.png" className={classes.large} />
             </Grid>
             <Menu />
         </Grid>

@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
     },
     p: {
         marginBottom: '10%',
+        textDecoration: 'none',
+        color: '#8A838D',
+        fontWeight: 'bold',
+        fontFamily: '',
     },
     to: {
         textDecoration: 'none',

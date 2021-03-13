@@ -17,9 +17,6 @@ const useStyles = makeStyles((theme) => ({
       fontSize: theme.typography.pxToRem(16),
       flexBasis: '33.33%',
       flexShrink: 0,
-      fontWeight: 'bold',
-      textTransform: 'capitalize',
-      color: '#6E6673',
     },
     summary: {
     },
@@ -51,6 +48,16 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         fontFamily: '',
         textTransform: 'capitalize',   
+    },
+    white: {
+        color: '#D460BE',
+        fontWeight: 'bold',
+        textTransform: 'capitalize',
+    },
+    black: {
+        color: '#6E6673',
+        fontWeight: 'bold',
+        textTransform: 'capitalize',
     }
   }));
 
@@ -70,7 +77,7 @@ const MenuAccordion = ({item, handleChange, expanded, handleClickLink, selected}
                     aria-controls={`panel${item}-content`}
                     id={`panel${item}-header`}
                     >
-                    <Typography className={classes.heading}>{item}</Typography>
+                    <Typography className={classes.heading, expanded === `panel${item}`?classes.white : classes.black}>{item}</Typography>
                     </AccordionSummary>
                     <AccordionDetails className={classes.links}>
                         {
