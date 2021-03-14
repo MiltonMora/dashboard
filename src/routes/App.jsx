@@ -23,6 +23,7 @@ const App = () => {
           <Route exact path="/" component={SignIn} />
           <Layout>
             <Route exact path="/home" component={Home} />
+            <Route exact path="/users" component={Home} />
           </Layout>
         </Switch>
     </BrowserRouter>

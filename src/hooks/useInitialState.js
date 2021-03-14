@@ -13,8 +13,16 @@ const useInitialState = () => {
         });
     }
 
+    const setThema = payload => {
+        setState({
+            ...state,
+            thema: payload,
+        });
+    }
+
     return {
         menuStatus,
+        setThema,
         state,
     }
 };

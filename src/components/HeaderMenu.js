@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(5),
       height: theme.spacing(5),
       margin: '5%',
+      float: 'right',
     },
   }));
 

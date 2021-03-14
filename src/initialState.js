@@ -17,5 +17,6 @@ export default {
       Business: 'business',
       'Business User': 'business-user'
     },
-  }
+  },
+  thema: {},
 };

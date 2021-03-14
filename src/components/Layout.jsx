@@ -1,19 +1,26 @@
 import React, { useContext, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuOpen from '@material-ui/icons/MenuOpen';
 import Menu from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import { useHistory } from 'react-router-dom';
+import Avatar from '@material-ui/core/Avatar';
+import { deepPurple } from '@material-ui/core/colors';
+import Badge from '@material-ui/core/Badge';
+import theme from '../containers/theme';
 
-import Header from './Header';
+
 import HeaderMenu from './HeaderMenu';
 import Footer from './Footer';
 import AppContext from '../context/AppContext';
 
 import '../styles/components/Layout.css';
+import { ContactSupportOutlined } from '@material-ui/icons';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,22 +61,43 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'RGBA(255,255,255,0.83)',
   },
   menuSticky: {
-    height: "70px",
-    width: 'calc(100%/6)',
-    borderBottom: "1px solid #e5e5e5",
     position: "fixed",
-    top: "0",
     zIndex: 999,
-    float: 'right',
     backgroundColor: 'RGBA(255,255,255,0.83)',
+  },
+  topMenu: {
+    height: "70px",
+    borderBottom: "1px solid #e5e5e5",
+    position: "sticky",
+    top: "0",
+    backgroundColor: "RGBA(255,255,255,0.7)",
   },
   margin: {
     margin: theme.spacing(0),
   },
+  me: {
+    float: 'right',
+    margin: theme.spacing(1),
+  },
+  color: {
+    color: theme.palette.getContrastText(deepPurple[500]),
+    backgroundColor: theme.palette.secondary.main,
+  }
 }));
 
+
+const SmallAvatar = withStyles((theme) => ({
+  root: {
+    width: 22,
+    height: 22,
+    border: `2px solid ${theme.palette.background.paper}`,
+  },
+}))(Avatar);
+
 const Layout = ({ children }) => {
-  const classes = useStyles();
+  
+  const them = useTheme();
+  const flag = useMediaQuery(them.breakpoints.up('md'));
   
   const histrory = useHistory();
 
@@ -79,10 +107,7 @@ const Layout = ({ children }) => {
     menuZise: 2,
   });
 
-  const {state: {lateralMenu}, menuStatus} = useContext(AppContext);
-
-  const theme = useTheme();
-  const flag = useMediaQuery(theme.breakpoints.up('md'));
+  const {state: {lateralMenu, thema}, menuStatus, setThema} = useContext(AppContext);
   
     const token = JSON.parse(localStorage.getItem('ustk'));
     const now = Date.now();
@@ -111,6 +136,8 @@ const Layout = ({ children }) => {
   },[flag]);
 
 
+  const classes = useStyles();
+
   const handleClose = () => {
     menuStatus(!lateralMenu);
     let menuZise = 2;
@@ -136,12 +163,22 @@ const Layout = ({ children }) => {
           </Grid>
         </Grid>
         <Grid item sm={layoutValues.md}>
-          <Grid item className={classes.menuSticky}>
-              <IconButton onClick={handleClose} id='colseMenu' className={classes.margin}>
-                  {lateralMenu ? <MenuOpen fontSize="inherit" /> : <Menu fontSize="inherit" />}
-              </IconButton>
+          <IconButton onClick={handleClose} id='colseMenu' className={classes.menuSticky}>
+              {lateralMenu ? <MenuOpen fontSize="inherit" /> : <Menu fontSize="inherit" />}
+          </IconButton>
+          <Grid item className={classes.topMenu}>
+            <Badge
+              overlap="circle"
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              className={classes.me}
+              badgeContent={<SmallAvatar ><SettingsApplications /></SmallAvatar>}
+            >
+              <Avatar className={classes.color}>MM</Avatar>
+            </Badge>
           </Grid>
-            <Header />
           <Grid item className={classes.content}>
             {children}
           </Grid>
