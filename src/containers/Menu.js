@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import themeColors from '../containers/ThemeColors';
 
 import AppContext from '../context/AppContext';
 import MenuAccordion from '../components/MenuAccordion';
@@ -20,23 +21,23 @@ const useStyles = makeStyles((theme) => ({
     p: {
         marginBottom: '10%',
         textDecoration: 'none',
-        color: '#8A838D',
+        color: themeColors.palette.secondary.contrastText,
         fontWeight: 'bold',
         fontFamily: '',
     },
     to: {
         textDecoration: 'none',
-        color: '#8A838D',
+        color: themeColors.palette.secondary.contrastText,
         fontWeight: 'bold',
         fontFamily: '',
         textTransform: 'capitalize',
       },
       icon: {
           marginRight: '-20px',
-          color: '#8A838D',
+          color: themeColors.palette.secondary.contrastText,
       },
       active: { 
-          color: '#D460BE',
+          color: themeColors.palette.secondary.main,
           textDecoration: 'none',
           fontWeight: 'bold',
           fontFamily: '',

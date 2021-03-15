@@ -11,15 +11,12 @@ import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import { deepPurple } from '@material-ui/core/colors';
 import Badge from '@material-ui/core/Badge';
-import theme from '../containers/theme';
-
+import themeColors from '../containers/ThemeColors';
 
 import HeaderMenu from './HeaderMenu';
-import Footer from './Footer';
 import AppContext from '../context/AppContext';
 
 import '../styles/components/Layout.css';
-import { ContactSupportOutlined } from '@material-ui/icons';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,8 +25,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   content: {
-      padding: '30px 40px',
-      maxHeight: '100%',
+      padding: '2% 4%',
   },
   menuContainerDisplay: {
     display: 'none',
@@ -81,8 +77,11 @@ const useStyles = makeStyles((theme) => ({
   },
   color: {
     color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: theme.palette.secondary.main,
-  }
+    backgroundColor: themeColors.palette.primary.main,
+  },
+  settings: {
+    backgroundColor: themeColors.palette.secondary.main,
+  },
 }));
 
 
@@ -115,7 +114,7 @@ const Layout = ({ children }) => {
     if (
       !token ||
       token.status === false ||
-      token.exp >= now
+      new Date(now) >= new Date(token.exp*1000)
     ){
       histrory.push('/');
     }
@@ -174,9 +173,9 @@ const Layout = ({ children }) => {
                 horizontal: 'right',
               }}
               className={classes.me}
-              badgeContent={<SmallAvatar ><SettingsApplications /></SmallAvatar>}
+              badgeContent={<SmallAvatar className={classes.settings}><SettingsApplications /></SmallAvatar>}
             >
-              <Avatar className={classes.color}>MM</Avatar>
+              <Avatar className={classes.color}>{token.username.charAt(0).toUpperCase()}</Avatar>
             </Badge>
           </Grid>
           <Grid item className={classes.content}>

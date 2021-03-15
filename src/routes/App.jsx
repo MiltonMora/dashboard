@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import Layout from '../components/Layout';
 import SignIn from '../containers/SignIn';
@@ -8,9 +8,9 @@ import Home from '../containers/Home';
 import Checkout from '../containers/Checkout';
 import Information from '../containers/Information';
 import Payment from '../containers/Payment';
-import Success from '../containers/Success';
-import NotFound from '../containers/NotFound';
 */
+import Users from '../containers/Users';
+
 import AppContext from '../context/AppContext';
 import useInitialState from '../hooks/useInitialState';
 
@@ -23,7 +23,7 @@ const App = () => {
           <Route exact path="/" component={SignIn} />
           <Layout>
             <Route exact path="/home" component={Home} />
-            <Route exact path="/users" component={Home} />
+            <Route exact path="/users" component={Users} />
           </Layout>
         </Switch>
     </BrowserRouter>

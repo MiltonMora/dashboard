@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import themeColors from '../containers/ThemeColors';
 
 import AppContext from '../context/AppContext';
 import Icons from '../components/Icons';
@@ -21,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     summary: {
     },
     summaryExpand: {
-        borderRight: '3px solid #D460BE',
-        backgroundColor: 'RGBA(170,110,159,0.2)',
+        borderRight: `2px solid ${themeColors.palette.secondary.main}`,
+        backgroundColor: themeColors.palette.secondary.light,
     },
     links: {
         display: 'block',
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     },
     to: {
       textDecoration: 'none',
-      color: '#8A838D',
+      color: themeColors.palette.secondary.contrastText,
       fontWeight: 'bold',
       fontFamily: '',
       textTransform: 'capitalize',
@@ -43,19 +44,19 @@ const useStyles = makeStyles((theme) => ({
         marginRight: '-20px',
     },
     active: { 
-        color: '#D460BE',
+        color: themeColors.palette.secondary.main,
         textDecoration: 'none',
         fontWeight: 'bold',
         fontFamily: '',
         textTransform: 'capitalize',   
     },
     white: {
-        color: '#D460BE',
+        color: themeColors.palette.secondary.main,
         fontWeight: 'bold',
         textTransform: 'capitalize',
     },
     black: {
-        color: '#6E6673',
+        color: themeColors.palette.secondary.contrastText,
         fontWeight: 'bold',
         textTransform: 'capitalize',
     }

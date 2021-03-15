@@ -29,9 +29,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//import Products from '../components/Products';
-//import AppContext from '../context/AppContext';
-
 const Home = () => {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;

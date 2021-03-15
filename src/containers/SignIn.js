@@ -135,6 +135,7 @@ export default function SignInSide() {
       Login(data)
       .then(res => {
         setValues({...values, loading: false})
+        localStorage.setItem('tk', res.data.token)
         localStorage.setItem('ustk', JSON.stringify(jwt_decode(res.data.token)))
         histrory.push('/home');
       })
