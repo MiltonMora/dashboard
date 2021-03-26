@@ -161,7 +161,7 @@ const Layout = ({ children }) => {
             <HeaderMenu />
           </Grid>
         </Grid>
-        <Grid item sm={layoutValues.md}>
+        <Grid item xs={12} sm={layoutValues.md}>
           <IconButton onClick={handleClose} id='colseMenu' className={classes.menuSticky}>
               {lateralMenu ? <MenuOpen fontSize="inherit" /> : <Menu fontSize="inherit" />}
           </IconButton>

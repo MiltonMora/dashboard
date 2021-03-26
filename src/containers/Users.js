@@ -1,12 +1,22 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import themeColors from '../containers/ThemeColors';
 import Chip from '@material-ui/core/Chip';
-import { DataGrid } from '@material-ui/data-grid';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 import { getUsers } from '../actions/UserActions';
+import SimpleModal from './Modal';
+import themeColors from '../containers/ThemeColors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,13 +24,29 @@ const useStyles = makeStyles((theme) => ({
   },
   color: {
     backgroundColor: "RGBA(255,255,255,0.5)",
-    textAlign: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    color: themeColors.palette.primary.main,
   },
   colorContent: {
   },
   data: {
     
-  }
+  },
+  table: {
+    border: '1px solid RGBA(0,0,0,0.1)',
+  },
+  row: {
+    '&:hover': {
+      background: "RGBA(0,0,0,0.1)",
+   },
+  },
+  card: {
+    border: 'none',
+  },
+  modal: {
+    border: 'none',
+  },
 }));
 
 
@@ -28,60 +54,79 @@ function Users() {
   const classes = useStyles();
   const [values, setValues] = React.useState({
     load: true,
-    data: {},
+    data: [],
     errorMessage: '',
   });
+
+  const handleBusinessString = (index) => {
+    if (values.data[index].business != 'all') {
+      let business = '';
+      values.data[index].business.map(el =>(
+        business += `${el.name} ` 
+      ))
+      return business
+    }
+    return values.data[index].business
+  }
 
   useEffect(()=> {
     getUsers()
     .then(res => {
-        setValues({...values, data: res, load: false});
+        setValues({...values, data: res.data.data, load: false});
       })
     .catch(err => {
       setValues({...values, errorMessage: err, load: false});
       })
   },[]);
 
-  const columns = [
-    { field: 'id', headerName: 'ID'},
-    { field: 'firstName', headerName: 'First name' },
-    { field: 'lastName', headerName: 'Last name' },
-    {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-    },
-    {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      valueGetter: (params) =>
-        `${params.getValue('firstName') || ''} ${params.getValue('lastName') || ''}`,
-    },
-  ];
-  
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
   return (
     <div className={classes.root}>
       <Grid container >
-        <Grid className={classes.color} >
-          <img className={classes.colorContent} src='https://uaq-capp-academico.com/public/img/loader2.gif' />
-          <Chip className={classes.colorContent}
-            label="Cargando ....."
-            color="primary"
-          />
-        </Grid>
+        {values.load ?
+          <Grid className={classes.color} >
+            <img className={classes.colorContent} src='https://uaq-capp-academico.com/public/img/loader2.gif' />
+            <Chip className={classes.colorContent}
+              label="Cargando ....."
+              color="primary"
+            />
+          </Grid>:
+          <Grid item xs={12}>
+            <TableContainer >
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell align="left">Email</TableCell>
+                    <TableCell align="left">Rol</TableCell>
+                    <TableCell align="left">Business</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                     { values.data.map((row, index) => 
+                     <TableRow className={classes.row} key={row.email}>
+                        <TableCell component="th" scope="row">
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="left">{row.email}</TableCell>
+                        <TableCell align="left">{row.rol}</TableCell>
+                        <TableCell align="left">{handleBusinessString(index)}</TableCell>
+                      </TableRow>)
+                     }                 
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <SimpleModal className={classes.modal}>
+            <Card className={classes.card}>
+              <CardContent>
+                
+              </CardContent>
+              <CardActions>
+                <Button size="small">Learn More</Button>
+              </CardActions>
+            </Card>
+            </SimpleModal>
+          </Grid>
+        }
       </Grid>
     </div>
   )
