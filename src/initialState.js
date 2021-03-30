@@ -4,7 +4,7 @@ export default {
   permission: {
     SuperAdministrator: [
       'users',
-      'Business',
+      'Courses',
     ],
   },
   menu: {
@@ -13,9 +13,8 @@ export default {
       Perfiles: 'perfil',
       'Perfil Usuarios': 'prefil-users'
     },
-    Business: { 
-      Business: 'business',
-      'Business User': 'business-user'
+    Courses: { 
+      Courses: 'Courses',
     },
   },
   thema: {},

@@ -13,7 +13,31 @@ export function Login(data) {
 export function getUsers() {
     try {
        const auth = localStorage.getItem('tk');
-       return axios.get(`http://127.0.0.1:8000/api/user/`, {
+       return axios.get(`http://127.0.0.1:8000/api/user`, {
+        headers: {  Authorization: 'Bearer ' + auth }
+      })
+    }
+    catch(error) {
+        console.log(error.message);
+    }
+}
+
+export function getRoles() {
+    try {
+       const auth = localStorage.getItem('tk');
+       return axios.get(`http://127.0.0.1:8000/api/rol`, {
+        headers: {  Authorization: 'Bearer ' + auth }
+      })
+    }
+    catch(error) {
+        console.log(error.message);
+    }
+}
+
+export function setNewUser(data) {
+    try {
+       const auth = localStorage.getItem('tk');
+       return axios.post(`http://127.0.0.1:8000/api/user/new/user`, data, {
         headers: {  Authorization: 'Bearer ' + auth }
       })
     }

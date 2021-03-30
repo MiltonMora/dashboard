@@ -11,14 +11,13 @@ function rand() {
 }
 
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
 
   return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
+    top: `20%`,
+    left: `25%`,
+    transform: `translate(-20%, -25%)`,
     border: 'none',
+    padding: '15px'
   };
 }
 
@@ -26,9 +25,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     paper: {
       position: 'absolute',
-      width: 400,
       backgroundColor: theme.palette.background.paper,
-      padding: theme.spacing(2, 4, 3),
     },
     addIcon: {
         backgroundColor: themeColors.palette.secondary.main,
