@@ -45,3 +45,15 @@ export function setNewUser(data) {
         console.log(error.message);
     }
 }
+
+export function changueStatus(data) {
+    try {
+       const auth = localStorage.getItem('tk');
+       return axios.post(`http://127.0.0.1:8000/api/user/change-status`, data, {
+        headers: {  Authorization: 'Bearer ' + auth }
+      })
+    }
+    catch(error) {
+        console.log(error.message);
+    }
+}

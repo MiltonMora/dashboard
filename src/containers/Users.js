@@ -2,12 +2,6 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,17 +12,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import SaveIcon from '@material-ui/icons/Save';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 
 
 import { getUsers, getRoles, setNewUser } from '../actions/UserActions';
 import SimpleModal from './Modal';
 import themeColors from '../containers/ThemeColors';
+import TableUsers from '../components/TableUsers';
+import AlertBar from '../components/AlertBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,14 +35,6 @@ const useStyles = makeStyles((theme) => ({
   },
   data: {
     
-  },
-  table: {
-    border: '1px solid RGBA(0,0,0,0.1)',
-  },
-  row: {
-    '&:hover': {
-      background: "RGBA(0,0,0,0.1)",
-   },
   },
   card: {
     border: 'none',
@@ -75,13 +58,14 @@ function Users() {
   const [values, setValues] = React.useState({
     load: true,
     data: [],
-    errorMessage: '',
     perfil: '',
     roles: [],
     name: '',
     email: '',
     open: false,
+    error: false,
     loading: false,
+    message: '',
   });
 
   useEffect(()=> {
@@ -96,11 +80,11 @@ function Users() {
             setValues({...values, data: res.data.data, roles: rol.data.data, load: false});
       })
       .catch(erRol => {
-        setValues({...values, errorMessage: erRol, load: false});
+        setValues({...values, load: false});
       })
       })
     .catch(err => {
-      setValues({...values, errorMessage: err, load: false});
+      setValues({...values, load: false});
       })
   }
   const handleChangePerfil = (event) => {
@@ -117,16 +101,16 @@ function Users() {
     setNewUser(data)
     .then(res => {
       if(res.data.status === undefined || res.data.status === 404) {
-        setValues({...values, open: true, loading: false});
+        setValues({...values, open: true, loading: false, error: true});
       }
       else {
-        setValues({...values, load: true, loading: false});
+        setValues({...values, load: true, loading: false, error: false});
         handleUsers()
       }
     })
     .catch(err => {
       console.log(err)
-      setValues({...values, open: true, loading: false});
+      setValues({...values, open: true, loading: false, error: true});
     })
   }
 
@@ -152,51 +136,13 @@ function Users() {
               color="primary"/>
           </Grid>:
           <Grid item xs={12}>
-            <TableContainer >
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="left">Email</TableCell>
-                    <TableCell align="left">Rol</TableCell>
-                    <TableCell align="left">Status</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                     { values.data.map((row) => 
-                     <TableRow className={classes.row} key={row.email}>
-                        <TableCell component="th" scope="row">
-                          {row.name}
-                        </TableCell>
-                        <TableCell align="left">{row.email}</TableCell>
-                        <TableCell align="left">{row.rol}</TableCell>
-                        <TableCell align="left">{row.status ? 'active': 'no active'}</TableCell>
-                      </TableRow>)
-                     }                 
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                  }}
-                autoHideDuration={6000}
+            <TableUsers data={values.data} handleUsers={handleUsers}/>
+            <AlertBar
+                message={values.message}
+                error={values.error}
                 open={values.open}
-                onClose={handleClose}
-                action={
-                    <React.Fragment>
-                      <IconButton size="large" aria-label="close" color="inherit" onClick={handleClose}>
-                        <CloseIcon fontSize="large" />
-                      </IconButton>
-                    </React.Fragment>
-                  }
-                className={classes.alert}>
-                <Alert onClose={handleClose} severity="error">
-                <AlertTitle>Error</AlertTitle>
-                Error Verifique los datos
-                </Alert>
-            </Snackbar>
+                handleClose={handleClose}
+            />
             <SimpleModal className={classes.modal}>
             <Card className={classes.card}>
               <Typography variant="h4" component="h4">
