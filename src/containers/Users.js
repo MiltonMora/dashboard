@@ -136,7 +136,7 @@ function Users() {
               color="primary"/>
           </Grid>:
           <Grid item xs={12}>
-            <TableUsers data={values.data} handleUsers={handleUsers}/>
+            <TableUsers data={values.data} roles={values.roles} handleUsers={handleUsers}/>
             <AlertBar
                 message={values.message}
                 error={values.error}

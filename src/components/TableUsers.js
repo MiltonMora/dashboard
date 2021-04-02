@@ -22,6 +22,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import SaveIcon from '@material-ui/icons/Save';
 import ArrowLeft from '@material-ui/icons/ArrowLeft';
 import Grid from '@material-ui/core/Grid';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import { changueStatus } from '../actions/UserActions';
 import AlertBar from './AlertBar';
@@ -67,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   }));
   
 
-const TableUsers = ({data, handleUsers}) => {
+const TableUsers = ({data, handleUsers, roles}) => {
     const classes = useStyles();
 
     const [values, setValues] = React.useState({
@@ -80,6 +82,7 @@ const TableUsers = ({data, handleUsers}) => {
         roles: [],
         name: '',
         email: '',
+        id: '',
       });
 
     const handleClose = (event, reason) => {
@@ -90,9 +93,19 @@ const TableUsers = ({data, handleUsers}) => {
     };
 
     const handleForm = data => {
-        setValues({...values, name: data.name, email: data.email, perfil: data.rol, form: true})
+        let rol = '';
+        roles.forEach(element => {
+            if(element.name === data.rol[0]) {
+                rol = element
+            }
+        });
+        setValues({...values, name: data.name, email: data.email, perfil: rol, id: data.id, form: true})
     }
     
+    const handleChangePerfil = (event) => {
+        setValues({...values, perfil: event.target.value});
+      }
+
     const handleStatus = email => {
         const data = new FormData();
         data.append("email", email);
@@ -129,7 +142,7 @@ const TableUsers = ({data, handleUsers}) => {
                 </TableHead>
                 <TableBody>
                     { data.map((row) => 
-                    <TableRow className={classes.row} key={row.email}>
+                    <TableRow className={classes.row} key={row.id}>
                         <TableCell component="th" scope="row">
                         {row.name}
                         </TableCell>
@@ -165,6 +178,7 @@ const TableUsers = ({data, handleUsers}) => {
         <Grid item xs={12} md={6}>
         <Card className={classes.card}>
         <form noValidate autoComplete="on">
+            {console.log(values.perfil)}
             <Typography variant="h4" component="h4">
                 Edit User
             </Typography>
@@ -186,6 +200,19 @@ const TableUsers = ({data, handleUsers}) => {
             <InputLabel  shrink id="rolLabel">
                 Rol
             </InputLabel>
+            <Select
+                  className={classes.input}
+                  labelId="rolLabel"
+                  id="rol"
+                  value={values.perfil}
+                  onChange={handleChangePerfil}
+                >
+                  { roles.map((rol)=>
+                    <MenuItem key={rol.id} value={rol.id} selected={values.perfil.id == rol.id }>
+                    <em>{rol.name}</em>
+                  </MenuItem>
+                  )}
+                </Select>
             <Button
                 disabled={values.loading}
                 variant="contained"
@@ -198,7 +225,7 @@ const TableUsers = ({data, handleUsers}) => {
             <Button
                 variant="contained"
                 size="large"
-                onClick={()=> setValues({...values, name: '', email: '', perfil: '', form: false})}
+                onClick={()=> setValues({...values, name: '', email: '', perfil: '', id: '', form: false})}
                 startIcon={<ArrowLeft />}
                 className={classes.button}>
                 Cancel
