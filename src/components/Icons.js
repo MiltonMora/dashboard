@@ -6,6 +6,7 @@ import AssignmentInd from '@material-ui/icons/AssignmentInd';
 import RecentActors from '@material-ui/icons/RecentActors';
 import BusinessCenter from '@material-ui/icons/BusinessCenter';
 import HomeWork from '@material-ui/icons/HomeWork';
+import LocalLibrary from '@material-ui/icons/LocalLibrary';
 
 const Icons = ({element}) => {
     switch(element) {
@@ -21,6 +22,8 @@ const Icons = ({element}) => {
             return (<BusinessCenter />)
         case 'home':
             return (<HomeWork />)
+        case 'Courses':
+            return (<LocalLibrary />)
         default:
             return (<InboxIcon />)
     }

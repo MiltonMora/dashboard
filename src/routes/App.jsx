@@ -4,12 +4,8 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SignIn from '../containers/SignIn';
 import Home from '../containers/Home';
-/*
-import Checkout from '../containers/Checkout';
-import Information from '../containers/Information';
-import Payment from '../containers/Payment';
-*/
 import Users from '../containers/Users';
+import Courses from '../containers/Courses';
 
 import AppContext from '../context/AppContext';
 import useInitialState from '../hooks/useInitialState';
@@ -24,6 +20,7 @@ const App = () => {
           <Layout>
             <Route exact path="/home" component={Home} />
             <Route exact path="/users" component={Users} />
+            <Route exact path="/courses" component={Courses} />
           </Layout>
         </Switch>
     </BrowserRouter>

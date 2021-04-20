@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
     position: "sticky",
     top: "0",
     backgroundColor: "RGBA(255,255,255,0.7)",
+    zIndex: '99',
   },
   margin: {
     margin: theme.spacing(0),

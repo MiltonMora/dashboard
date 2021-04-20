@@ -14,7 +14,7 @@ export default {
       'Perfil Usuarios': 'prefil-users'
     },
     Courses: { 
-      Courses: 'Courses',
+      Courses: 'courses',
     },
   },
   thema: {},
