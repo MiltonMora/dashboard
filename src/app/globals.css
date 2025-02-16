@@ -3,16 +3,51 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Tema claro */
+  --background: #ffffff; /* Fondo blanco */
+  --foreground: #14171A; /* Texto gris oscuro */
+  --button-bg: #1DA1F2; /* Azul claro Twitter */
+  --button-hover-bg: #1A91DA; /* Azul más oscuro al pasar el cursor */
+  --button-text-color: #ffffff; /* Texto blanco */
+  --input-bg: #f5f8fa; /* Gris muy claro para inputs */
+  --input-border: #e1e8ed; /* Borde gris claro */
+  --input-focus-border: #1278b7; /* Azul Twitter cuando el input está enfocado */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Tema oscuro */
+    --background: #15202B; /* Fondo muy oscuro */
+    --foreground: #AAB8C2; /* Texto gris claro */
+    --button-bg: #1DA1F2; /* Azul claro Twitter */
+    --button-hover-bg: #1991C6; /* Azul más oscuro al pasar el cursor */
+    --button-text-color: #ffffff; /* Texto blanco */
+    --input-bg: #2C3E50; /* Fondo más oscuro para inputs */
+    --input-border: #4B5860; /* Borde gris oscuro */
+    --input-focus-border: #48a5df; /* Azul Twitter cuando el input está enfocado */
   }
 }
+
+button {
+  background-color: var(--button-bg);
+  color: var(--button-text-color);
+}
+
+button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+
+input {
+  color: var(--foreground);
+  border-color: var(--input-border);
+}
+
+input:focus {
+  border-color: var(--input-focus-border);
+  outline: none;
+}
+
 
 body {
   color: var(--foreground);
