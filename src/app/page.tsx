@@ -4,16 +4,25 @@ import React, { useState } from "react";
 import Image from "next/image";
 import loginImg from "../../public/login.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useAuthStore } from '@/storage/authStore';
+import { login } from '@/api/authService';
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { setToken } = useAuthStore();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Email:", email);
+    console.log("Email:", username);
     console.log("Password:", password);
+    try {
+      const token = await login({ username, password });
+      setToken(token);
+    } catch (error) {
+      console.log("Error al autenticarte. Intenta de nuevo." + error);
+    }
   };
 
   const form = (
@@ -21,9 +30,9 @@ const LoginForm: React.FC = () => {
       <input
         placeholder="Email"
         type="email"
-        id="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        id="username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
         className="w-full block px-4 py-2 border-b-2 bg-inherit"
       />
       <div className="relative flex items-center space-x-2">
