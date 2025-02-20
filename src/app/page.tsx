@@ -6,22 +6,31 @@ import loginImg from "../../public/login.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuthStore } from '@/storage/authStore';
 import { login } from '@/api/authService';
+import Toast from "@/components/Toast";
+import Loading from '@/components/Loading';
+import { useRouter } from "next/navigation";
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: "negative" | "positive" | "information" } | null>(null);
   const { setToken } = useAuthStore();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
-    console.log("Email:", username);
-    console.log("Password:", password);
+    setToast(null);
     try {
       const token = await login({ username, password });
       setToken(token);
+      router.push('/dashboard')      
     } catch (error) {
-      console.log("Error al autenticarte. Intenta de nuevo." + error);
+      setToast({ message: "Error al autenticarte. Intenta de nuevo." + error, type: "negative" });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,19 +39,19 @@ const LoginForm: React.FC = () => {
       <input
         placeholder="Email"
         type="email"
-        id="username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        className="w-full block px-4 py-2 border-b-2 bg-inherit"
+        className="w-full px-4 py-2 border-b-2 bg-inherit"
+        required
       />
       <div className="relative flex items-center space-x-2">
         <input
-          id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           type={showPassword ? "text" : "password"}
           className="w-full px-4 py-2 border-b-2 bg-inherit"
+          required
         />
         <label className="flex items-center space-x-2">
           <span className="text-sm text-gray-600">
@@ -72,7 +81,10 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-white">
-      {/* Mobile and Tablet Layout */}
+
+      {loading && <Loading />}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+        
       <div className="w-full max-w-md overflow-hidden shadow-sm md:hidden p-2">
         <div className="flex flex-col items-center justify-center p-6">
           <div className="w-32 h-32 overflow-hidden rounded-full shadow-lg">

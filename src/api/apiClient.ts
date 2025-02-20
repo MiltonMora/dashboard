@@ -10,9 +10,9 @@ export const apiClient = async (endpoint: string, options: RequestInit) => {
       throw new Error(`Error: ${response.statusText}`);
     }
 
-    return await response.json(); // Devuelve la respuesta convertida en JSON
+    return await response.json();
   } catch (error) {
     console.error("API Error:", error);
-    throw error; // Lanza el error para que pueda ser manejado fuera
+    throw error;
   }
 };
