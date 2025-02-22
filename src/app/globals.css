@@ -4,7 +4,7 @@
 
 :root {
   /* Tema claro */
-  --background: #ffffff; /* Fondo blanco */
+  --background: rgb(249 250 251 / 1); /* Fondo blanco */
   --foreground: #14171A; /* Texto gris oscuro */
   --button-bg: #1DA1F2; /* Azul claro Twitter */
   --button-hover-bg: #1A91DA; /* Azul más oscuro al pasar el cursor */
@@ -12,10 +12,10 @@
   --input-bg: #f5f8fa; /* Gris muy claro para inputs */
   --input-border: #e1e8ed; /* Borde gris claro */
   --input-focus-border: #1278b7; /* Azul Twitter cuando el input está enfocado */
-  --navbar-bg: #eff4f8;
+  --navbar-bg: rgb(255 255 255 / 1);
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: darks) {
   :root {
     /* Tema oscuro */
     --background: #15202B; /* Fondo muy oscuro */

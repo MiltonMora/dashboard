@@ -24,14 +24,14 @@ const Navbar = ({ roles }: NavbarProps) => {
   return (
     <div className="flex fixed min-h-screen">
       <div
-        className={`bg-black bg-opacity-50 fixed w-full top-0 left-0 h-full transition-transform duration-300 ease-in-out ${
+        className={`bg-black bg-opacity-50 fixed w-full top-0 left-0 h-full transition-transform duration-300 ease-in-out lg:z-10 ${
           menuOpen ? "transform-none" : "-translate-x-full"
         } lg:translate-x-0 lg:w-52`}
         onClick={handleClick}
         id="menu-container"
       >
         <div
-          className="flex bg-[var(--navbar-bg)] flex-col items-start w-52 h-full p-4"
+          className="flex bg-[var(--navbar-bg)] flex-col items-start w-52 h-full p-4 border-r-2 lg:z-10"
           id="lateral-menu"
         >
           <nav className="space-y-4 mt-12">
@@ -64,7 +64,7 @@ const Navbar = ({ roles }: NavbarProps) => {
       </div>
 
       <div className="flex-1">
-        <section className="flex fixed flex-col items-center justify-center py-2 bg-[var(--navbar-bg)] w-full">
+        <section className="flex fixed flex-col items-center justify-center py-2 bg-[var(--navbar-bg)] w-full border-b-2 lg:z-0">
           <div className="flex justify-between w-full px-1 lg:justify-end">
             {menuOpen ? (
               <FaAngleDoubleLeft
