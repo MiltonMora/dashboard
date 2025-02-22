@@ -6,12 +6,13 @@ import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import Navbar from "@/components/Navbar";
 
-interface DecodedToken {
+export interface DecodedToken {
   exp: number;
+  roles: string[];
 }
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authData, setAuthData] = useState<DecodedToken>();
 
   useEffect(() => {
     const token = sessionStorage.getItem("jwt");
@@ -29,19 +30,20 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      setIsAuthenticated(true);
+      setAuthData(decoded);
     } catch (error) {
       sessionStorage.removeItem("jwt");
       redirect("/");
     }
   }, []);
 
-  if (!isAuthenticated) return null;
+  if (!authData || Object.keys(authData).length === 0) return null;
 
   return (
-    <Navbar>
-      <section className="flex justify-center m-auto lg:ml-64">{children}</section>
-    </Navbar>
+    <main>
+      <Navbar roles={authData.roles} />
+      <section className="flex justify-center m-auto lg:ml-52 pt-12">{children}</section>
+    </main>
   );
 };
 
