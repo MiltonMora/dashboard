@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import loginImg from "../../public/login.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -18,6 +18,10 @@ const LoginForm: React.FC = () => {
   const { setToken } = useAuthStore();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setToken(null);
+  }, [setToken])
 
   const handleSubmit = async (e: React.FormEvent) => {
     setLoading(true);

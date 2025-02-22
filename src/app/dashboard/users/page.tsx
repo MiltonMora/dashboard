@@ -74,24 +74,24 @@ const Index: React.FC = () => {
           onClose={() => setToast(null)}
         />
       )}
-      <div className="w-full mt-2 p-2 bg-white mx-auto rounded-xl overflow-hidden border">
+      <div className="w-full mt-2 p-2 bg-[var(--contrast-bg)] mx-auto rounded-xl overflow-hidden border border-[var(--border)]">
       <p className="m-2 font-bold">Users</p>
         <div className="overflow-x-auto p-4">
-          <table className="min-w-full bg-white border">
+          <table className="min-w-full bg-[var(--table-bg)] border border-[var(--border)]">
             <thead>
-              <tr className="text-gray-700">
-                <th className="px-4 py-2 border">Nombre</th>
-                <th className="px-4 py-2 border">Email</th>
+              <tr className="font-bold">
+                <th className="px-4 py-2 border border-[var(--border)]">Nombre</th>
+                <th className="px-4 py-2 border border-[var(--border)]">Email</th>
               </tr>
             </thead>
             <tbody>
               {usersData?.map((row) => (
                 <tr
                   key={row.id}
-                  className="text-center border hover:bg-gray-100"
+                  className="text-center border border-[var(--border)] hover:bg-[var(--hover)]"
                 >
-                  <td className="px-4 py-2 border truncate">{`${row.name} ${row.surNames}`}</td>
-                  <td className="px-4 py-2 border truncate">{row.email}</td>
+                  <td className="px-4 py-2 border border-[var(--border)] truncate">{`${row.name} ${row.surNames}`}</td>
+                  <td className="px-4 py-2 border border-[var(--border)] truncate">{row.email}</td>
                 </tr>
               ))}
             </tbody>

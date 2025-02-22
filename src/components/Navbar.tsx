@@ -31,7 +31,7 @@ const Navbar = ({ roles }: NavbarProps) => {
         id="menu-container"
       >
         <div
-          className="flex bg-[var(--navbar-bg)] flex-col items-start w-52 h-full p-4 border-r-2 lg:z-10"
+          className="flex bg-[var(--contrast-bg)] flex-col items-start w-52 h-full p-4 border-r-2 border-[var(--border)] lg:z-10"
           id="lateral-menu"
         >
           <nav className="space-y-4 mt-12">
@@ -54,7 +54,7 @@ const Navbar = ({ roles }: NavbarProps) => {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-lg">
+                <Link href="/" className="text-lg">
                   Logout
                 </Link>
               </li>
@@ -64,7 +64,7 @@ const Navbar = ({ roles }: NavbarProps) => {
       </div>
 
       <div className="flex-1">
-        <section className="flex fixed flex-col items-center justify-center py-2 bg-[var(--navbar-bg)] w-full border-b-2 lg:z-0">
+        <section className="flex fixed flex-col items-center justify-center py-2 bg-[var(--contrast-bg)] border-[var(--border)] w-full border-b-2 lg:z-0">
           <div className="flex justify-between w-full px-1 lg:justify-end">
             {menuOpen ? (
               <FaAngleDoubleLeft
