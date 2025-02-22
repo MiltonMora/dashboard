@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
+import Fixed from './Fixed';
 
 const Loading: React.FC = () => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <Fixed>
       <div id="building">
         <div id="blocks" className="m-auto">
           <div className="block" id="block_1"></div>
@@ -16,7 +17,7 @@ const Loading: React.FC = () => {
           loading...
         </div>
       </div>
-    </div>
+    </Fixed>
   );
 };
 
