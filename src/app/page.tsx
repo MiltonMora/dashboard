@@ -24,8 +24,8 @@ const LoginForm: React.FC = () => {
   }, [setToken])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    setLoading(true);
     e.preventDefault();
+    setLoading(true);
     setToast(null);
     try {
       const token = await login({ username, password });
@@ -39,7 +39,7 @@ const LoginForm: React.FC = () => {
   };
 
   const form = (
-    <form className="p-6 space-y-4">
+    <form className="p-6 space-y-4" onSubmit={handleSubmit}>
       <input
         placeholder="Email"
         type="email"
@@ -76,7 +76,6 @@ const LoginForm: React.FC = () => {
       <button
         type="submit"
         className="w-full p-2 rounded"
-        onClick={handleSubmit}
         >
         Sign Up
       </button>
