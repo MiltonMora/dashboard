@@ -5,41 +5,31 @@ import { useAuthStore } from "@/storage/authStore";
 import { jwtDecode } from "jwt-decode";
 import { redirect } from "next/navigation";
 import { DecodedToken } from "@/app/dashboard/layout";
-import {
-  list,
-  UserFormData,
-  User,
-  userCreate,
-  changeStatus,
-} from "@/api/userService";
+import { list, User, changeStatus } from "@/api/userService";
 import Toast from "@/components/Toast";
 import Loading from "@/components/Loading";
 import FloatingButton from "@/components/FloatingButton";
 import BasicCard from "@/components/BasicCard";
 import Fixed from "@/components/Fixed";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import ConfirmDialog from "@/components/ConfirmDialog";
+import UserForm from "@/components/users/UserForm";
 
 type UserList = User[];
+type FormType = "Create" | "Edited" | false;
 
 const Index: React.FC = () => {
   const [toast, setToast] = useState<{
     message: string;
     type: "negative" | "positive" | "information";
   } | null>(null);
-  const formReset = {
-    id: "",
-    name: "",
-    surname: "",
-    email: "",
-    password: "",
-  };
   const [loading, setLoading] = useState(false);
   const [usersData, setUsersData] = useState<UserList>();
-  const [actualUser, setActualUser] = useState<User | null>();
-  const [openModal, setOpenModal] = useState(false);
+  const [filteredUsers, setFilteredUsers] = useState<UserList>();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [actualUser, setActualUser] = useState<User | null>(null);
+  const [openModal, setOpenModal] = useState<FormType>(false);
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [formData, setFormData] = useState<UserFormData>(formReset);
   const { token } = useAuthStore();
 
   const fetchData = async () => {
@@ -47,6 +37,7 @@ const Index: React.FC = () => {
     try {
       const users = await list();
       setUsersData(users);
+      setFilteredUsers(users);
     } catch (error) {
       setToast({
         message: "Error al obtener los datos. " + error,
@@ -69,6 +60,7 @@ const Index: React.FC = () => {
         redirect("/");
         return;
       }
+      // eslint-disable-next-line no-unused-vars
     } catch (error) {
       redirect("/");
     }
@@ -78,45 +70,32 @@ const Index: React.FC = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (!searchTerm) {
+      setFilteredUsers(usersData);
+    } else {
+      setFilteredUsers(
+        usersData?.filter((user) =>
+          `${user.name} ${user.surname}`
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+        )
+      );
+    }
+  }, [searchTerm, usersData]);
+
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLDivElement;
     if (target.id === "fixed-element") {
       setOpenModal(false);
+      setActualUser(null);
     }
   };
 
-  const handleCreate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-
-    if (!form.reportValidity()) {
-      return;
-    }
-    setLoading(true);
-    setToast(null);
-    try {
-      await userCreate(formData);
-      fetchData();
-      setToast({
-        message: "Nuevo usuario creado correctamente",
-        type: "positive",
-      });
-      setFormData(formReset);
-      setOpenModal(false);
-    } catch (error) {
-      setToast({
-        message: "Error al crear nuevo usuario. Intenta de nuevo." + error,
-        type: "negative",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleConfirm = (user:User) => {
+  const handleConfirm = (user: User) => {
     setActualUser(user);
-    setOpenConfirm(true)
-  }
+    setOpenConfirm(true);
+  };
 
   const handleDelete = async (id: string) => {
     setLoading(true);
@@ -143,11 +122,11 @@ const Index: React.FC = () => {
   const handleCancel = () => {
     setActualUser(null);
     setOpenConfirm(false);
-  }
+  };
 
   return (
     <main className="flex flex-col w-full p-3">
-      {openModal && openModal && (
+      {openModal && (
         <Fixed onClick={handleClick}>
           {toast && (
             <Toast
@@ -157,59 +136,14 @@ const Index: React.FC = () => {
             />
           )}
           <BasicCard className="w-11/12 md:w-1/2 z-40">
-            <form
-              onSubmit={handleCreate}
-              className="p-6 space-y-4 grid grid-cols-1 lg:grid-cols-2 gap-4"
-            >
-              <input
-                placeholder="Name"
-                type="text"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                className="w-full px-4 py-2 border-b-2 bg-inherit"
-                required
-              />
-              <input
-                placeholder="Sur Name"
-                type="text"
-                value={formData.surname}
-                onChange={(e) =>
-                  setFormData({ ...formData, surname: e.target.value })
-                }
-                className="w-full px-4 py-2 border-b-2 bg-inherit"
-                required
-              />
-              <input
-                placeholder="Email"
-                type="email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                className="w-full px-4 py-2 border-b-2 bg-inherit"
-                required
-              />
-              <div className="relative flex items-center space-x-2">
-                <input
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                  placeholder="Password"
-                  type="text"
-                  className="w-full px-4 py-2 border-b-2 bg-inherit"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full p-2 rounded lg:col-span-2"
-              >
-                Create
-              </button>
-            </form>
+            <UserForm
+              mode={openModal}
+              user={actualUser}
+              setLoading={setLoading}
+              setToast={setToast}
+              fetchData={fetchData}
+              setOpenModal={setOpenModal}
+            />
           </BasicCard>
         </Fixed>
       )}
@@ -221,43 +155,60 @@ const Index: React.FC = () => {
           onClose={() => setToast(null)}
         />
       )}
-      { openConfirm && actualUser && <ConfirmDialog
-        message={`Estas Seguro de Inactivar al usurio ${actualUser.name}`} 
-        onConfirm={() => handleDelete(actualUser.id)}
-        onCancel={handleCancel}
-      />}
+      {openConfirm && actualUser && (
+        <ConfirmDialog
+          message={`Estas Seguro de Inactivar al usurio ${actualUser.name}`}
+          onConfirm={() => handleDelete(actualUser.id)}
+          onCancel={handleCancel}
+        />
+      )}
+
       <BasicCard className="w-full">
         <p className="m-2 font-bold">Users</p>
         <div className="overflow-x-auto p-4">
-          <table className="min-w-full bg-[var(--table-bg)] border border-[var(--border)]">
+          <input
+            type="text"
+            placeholder="Buscar por nombre"
+            className="p-2 m-2 border-b-2 bg-inherit left-0"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <table className="min-w-full bg-[var(--table-bg)] border border-[var(--border)] rounded-lg overflow-hidden">
             <thead>
-              <tr className="font-bold">
-                <th className="px-4 py-2 border border-[var(--border)]">
+              <tr className="font-bold bg-[var(--header-bg)]">
+                <th className="px-6 py-3 border-b border-[var(--border)] text-left">
                   Nombre
                 </th>
-                <th className="px-4 py-2 border border-[var(--border)]">
+                <th className="px-6 py-3 border-b border-[var(--border)] text-left">
                   Email
                 </th>
-                <th className="px-4 py-2 border border-[var(--border)]">
+                <th className="px-6 py-3 border-b border-[var(--border)] text-left">
                   Actions
                 </th>
               </tr>
             </thead>
             <tbody>
-              {usersData?.map((user) => (
+              {filteredUsers?.map((user) => (
                 <tr
                   key={user.id}
-                  className="text-center border border-[var(--border)] hover:bg-[var(--hover)]"
+                  className="text-center border-t-2 border-[var(--border)] hover:bg-[var(--hover)] transition-colors duration-300 ease-in-out"
                 >
-                  <td className="px-4 py-2 border border-[var(--border)] truncate">{`${user.name} ${user.surNames}`}</td>
-                  <td className="px-4 py-2 border border-[var(--border)] truncate">
-                    {user.email}
-                  </td>
-                  <td className="px-4 py-2 border border-[var(--border)] truncate">
-                    <FaTrash
-                      className="cursor-pointer"
-                      onClick={() => handleConfirm(user)}
-                    />
+                  <td className="px-6 py-3">{`${user.name} ${user.surname}`}</td>
+                  <td className="px-6 py-3">{user.email}</td>
+                  <td className="px-6 py-3">
+                    <div className="flex justify-center gap-4">
+                      <FaTrash
+                        className="cursor-pointer"
+                        onClick={() => handleConfirm(user)}
+                      />
+                      <FaPencilAlt
+                        className="cursor-pointer"
+                        onClick={() => {
+                          setActualUser(user);
+                          setOpenModal("Edited");
+                        }}
+                      />
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -265,7 +216,7 @@ const Index: React.FC = () => {
           </table>
         </div>
       </BasicCard>
-      <FloatingButton onClick={() => setOpenModal(true)} />
+      <FloatingButton onClick={() => setOpenModal("Create")} />
     </main>
   );
 };

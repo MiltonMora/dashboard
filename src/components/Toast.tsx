@@ -37,7 +37,7 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
 
   return (
     <div
-      className={`fixed top-5 right-5 px-4 py-2 rounded shadow-md transition-all duration-300 ease-in-out
+      className={`fixed z-50 top-5 right-5 px-4 py-2 rounded shadow-md transition-all duration-300 ease-in-out
         ${getBackgroundColor()} 
         ${visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}
       `}

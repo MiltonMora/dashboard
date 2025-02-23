@@ -1,16 +1,17 @@
 import { apiClient } from './apiClient';
 
 export interface UserFormData {
+  id: string;
   name: string;
   surname: string;
   email: string;
-  password: string;
+  password?: string;
 }
 
 export interface User {
   id: string;
   name: string;
-  surNames: string;
+  surname: string;
   email: string;
   roles: string[];
   isActive: boolean;
@@ -50,6 +51,19 @@ export const changeStatus = async (id:string) => {
       'Authorization': `Bearer ${sessionStorage.getItem("jwt")}`
     },
     body: JSON.stringify({ "userId": id })
+  });
+
+  return res;
+};
+
+export const changeData = async (data:UserFormData) => {
+  const res = await apiClient('/admin/user/change-data', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem("jwt")}`
+    },
+    body: JSON.stringify(data)
   });
 
   return res;

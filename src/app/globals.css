@@ -4,18 +4,18 @@
 
 :root {
   /* Tema claro */
-  --background: rgb(239, 246, 253); /* Fondo blanco */
-  --foreground: #14171A; /* Texto gris oscuro */
-  --button-bg: #1DA1F2; /* Azul claro Twitter */
-  --button-hover-bg: #1A91DA; /* Azul más oscuro al pasar el cursor */
-  --button-text-color: #ffffff; /* Texto blanco */
-  --input-bg: #f5f8fa; /* Gris muy claro para inputs */
-  --input-border: #e1e8ed; /* Borde gris claro */
-  --input-focus-border: #1278b7; /* Azul Twitter cuando el input está enfocado */
-  --contrast-bg: rgb(255 255 255);
-  --border: #7b7b7b;
-  --table-bg: rgb(249, 248, 248);
-  --hover: rgb(255, 255, 255);
+  --background: rgb(228, 231, 236);
+  --foreground: #2a2d31;
+  --button-bg: #007bff;
+  --button-hover-bg: #0069d9;
+  --button-text-color: #ffffff;
+  --input-bg: #ffffff;
+  --input-border: #ced4da;
+  --input-focus-border: #80bdff;
+  --contrast-bg: #ffffff;
+  --border: #dee2e6;
+  --table-bg: #ffffff;
+  --hover: #cecdcd;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -31,6 +31,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       }
 
       setAuthData(decoded);
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       sessionStorage.removeItem("jwt");
       redirect("/");
@@ -42,7 +43,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main>
       <Navbar roles={authData.roles} />
-      <section className="flex justify-center m-auto lg:ml-52 pt-12">{children}</section>
+      <section className="flex justify-center m-auto lg:ml-56 pt-12">{children}</section>
     </main>
   );
 };

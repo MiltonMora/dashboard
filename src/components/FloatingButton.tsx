@@ -9,7 +9,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({ onClick }) => {
   return (
     <FaPlusCircle
       onClick={onClick}
-      className="fixed bottom-4 right-4 text-white cursor-pointer rounded-full shadow-lg size-14"
+      className="fixed bottom-4 right-4 text-[var(--foreground)] cursor-pointer rounded-full shadow-lg size-14"
     />
   );
 };
