@@ -34,6 +34,7 @@ const UserForm: React.FC<UserFormProps> = ({
     surname: "",
     email: "",
     password: "",
+    rol: "ROLE_USER",
   };
 
   const [formData, setFormData] = useState<UserFormData>(formReset);
@@ -44,7 +45,7 @@ const UserForm: React.FC<UserFormProps> = ({
     } else {
       setFormData(formReset);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -126,6 +127,30 @@ const UserForm: React.FC<UserFormProps> = ({
               required={mode === "Create"}
               maxLength={20}
             />
+            <select
+              required={mode === "Create"}
+              className="w-full px-4 py-2 border-b-2 bg-inherit"
+              value={formData.rol}
+              onChange={(e) =>
+                setFormData({ ...formData, rol: e.target.value })
+              }
+            >
+              <option className="bg-[var(--contrast-bg)] hover:bg-[var(--hover)] cursor-pointer">Rol</option>
+              <option
+                className="bg-[var(--contrast-bg)] hover:bg-[var(--hover)] cursor-pointer"
+                value="ROLE_USER"
+                selected={formData.rol === "ROLE_USER"}
+              >
+                User
+              </option>
+              <option
+                className="bg-[var(--contrast-bg)] hover:bg-[var(--hover)] cursor-pointer"
+                value="ROLE_ADMIN"
+                selected={formData.rol === "ROLE_ADMIN"}
+              >
+                Admin
+              </option>
+            </select>
           </>
         )}
         <button type="submit" className="w-full p-2 rounded lg:col-span-2">

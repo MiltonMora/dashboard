@@ -46,12 +46,12 @@ button:hover {
 }
 
 
-input {
+input, select {
   color: var(--foreground);
   border-color: var(--input-border);
 }
 
-input:focus {
+input:focus, select:focus {
   border-color: var(--input-focus-border);
   outline: none;
 }

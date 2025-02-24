@@ -6,6 +6,11 @@ export interface UserFormData {
   surname: string;
   email: string;
   password?: string;
+  phone?: string;
+  country?: string;
+  community?: string;
+  address?: string;
+  rol?: string;
 }
 
 export interface User {
