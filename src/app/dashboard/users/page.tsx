@@ -56,7 +56,7 @@ const Index: React.FC = () => {
 
     try {
       const decoded: DecodedToken = jwtDecode(token);
-      if (!decoded.roles.includes("ROLE_ADMIN")) {
+      if (!decoded.roles.includes("ROLE_ADMIN") && !decoded.roles.includes("ROLE_SUPER_ADMIN")) {
         redirect("/");
         return;
       }

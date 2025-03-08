@@ -10,6 +10,7 @@ import {
   FaHome,
   FaSignOutAlt,
   FaCog,
+  FaFileMedicalAlt,
 } from "react-icons/fa";
 import Link from "next/link";
 
@@ -55,12 +56,21 @@ const Navbar = ({ roles }: NavbarProps) => {
                 active={pathname === "/dashboard"}
                 onClick={handleCloseMenu}
               />
-              {roles.includes("ROLE_ADMIN") && (
+              {roles.includes("ROLE_ADMIN") || roles.includes("ROLE_SUPER_ADMIN") && (
                 <NavItem
                   href="/dashboard/users"
                   icon={<FaUsersCog />}
                   text="Usuarios"
                   active={pathname === "/dashboard/users"}
+                  onClick={handleCloseMenu}
+                />
+              )}
+              {roles.includes("ROLE_DOCTOR") || roles.includes("ROLE_SUPER_ADMIN") && (
+                <NavItem
+                  href="/dashboard/record"
+                  icon={<FaFileMedicalAlt />}
+                  text="Medical Recors"
+                  active={pathname === "/dashboard/record"}
                   onClick={handleCloseMenu}
                 />
               )}

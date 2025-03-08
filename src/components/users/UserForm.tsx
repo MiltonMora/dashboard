@@ -141,14 +141,21 @@ const UserForm: React.FC<UserFormProps> = ({
                 value="ROLE_USER"
                 selected={formData.rol === "ROLE_USER"}
               >
-                User
+                Usuario
               </option>
               <option
                 className="bg-[var(--contrast-bg)] hover:bg-[var(--hover)] cursor-pointer"
                 value="ROLE_ADMIN"
                 selected={formData.rol === "ROLE_ADMIN"}
               >
-                Admin
+                Administrador
+              </option>
+              <option
+                className="bg-[var(--contrast-bg)] hover:bg-[var(--hover)] cursor-pointer"
+                value="ROLE_DOCTOR"
+                selected={formData.rol === "ROLE_DOCTOR"}
+              >
+                Doctor
               </option>
             </select>
           </>
